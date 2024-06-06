@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using ScoreTracker.Pages;
 
 namespace ScoreTracker.ViewModels
 {
@@ -48,9 +49,9 @@ namespace ScoreTracker.ViewModels
         }
 
         [RelayCommand(CanExecute = nameof(ShouldExecuteStatisticsButton))]
-        private void ShowStatistics()
+        private async Task ShowStatistics()
         {
-            // go to next page
+            await Shell.Current.GoToAsync(nameof(StatisticsPage));
         }
     }
 }

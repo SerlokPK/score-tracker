@@ -63,4 +63,10 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Pages\StatisticsPage.xaml.cs">
+	    <DependentUpon>StatisticsPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
 </Project>

@@ -8,7 +8,7 @@
     Title="ScoreTracker">
 
     <ShellContent
-        Title="Home"
+        Title="Score tracker"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

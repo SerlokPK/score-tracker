@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using ScoreTracker.Pages;
 using ScoreTracker.ViewModels;
 
 namespace ScoreTracker
@@ -21,6 +22,9 @@ namespace ScoreTracker
 #endif
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
+
+            builder.Services.AddTransient<StatisticsPage>();
+            builder.Services.AddTransient<StatisticsViewModel>();
 
             return builder.Build();
         }
