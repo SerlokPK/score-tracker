@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 
 namespace ScoreTracker.ViewModels
 {
@@ -12,10 +12,14 @@ namespace ScoreTracker.ViewModels
         }
 
         [ObservableProperty]
-        private ObservableCollection<string> players;
+        [NotifyCanExecuteChangedFor(nameof(ShowStatisticsCommand))]
+        private bool _shouldExecuteStatisticsButton;
 
         [ObservableProperty]
-        private string addPlayerInput;
+        private ObservableCollection<string> _players;
+
+        [ObservableProperty]
+        private string _addPlayerInput;
 
         [RelayCommand]
         private void AddPlayer()
@@ -27,6 +31,26 @@ namespace ScoreTracker.ViewModels
 
             Players.Add(AddPlayerInput);
             AddPlayerInput = string.Empty;
+
+            ShouldExecuteStatisticsButton = true;
+        }
+
+        [RelayCommand]
+        private void RemovePayer(string player)
+        {
+            if (!Players.Contains(player))
+            {
+                return;
+            }
+
+            Players.Remove(player);
+            ShouldExecuteStatisticsButton = Players.Any();
+        }
+
+        [RelayCommand(CanExecute = nameof(ShouldExecuteStatisticsButton))]
+        private void ShowStatistics()
+        {
+            // go to next page
         }
     }
 }
