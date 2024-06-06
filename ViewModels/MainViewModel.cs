@@ -1,23 +1,29 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using ScoreTracker.Data.Contracts;
+using ScoreTracker.Data.Entities;
 using ScoreTracker.Pages;
 
 namespace ScoreTracker.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        public MainViewModel()
+        private readonly IPlayerRepository _playerRepository;
+
+        public MainViewModel(IPlayerRepository playerRepository)
         {
+            _playerRepository = playerRepository ?? throw new ArgumentNullException(nameof(playerRepository));
+
             Players = [];
         }
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(ShowStatisticsCommand))]
-        private bool _shouldExecuteStatisticsButton;
+        private bool _shouldDisplayPlayerButtons;
 
         [ObservableProperty]
-        private ObservableCollection<string> _players;
+        private ObservableCollection<Player> _players;
 
         [ObservableProperty]
         private string _addPlayerInput;
@@ -30,14 +36,17 @@ namespace ScoreTracker.ViewModels
                 return;
             }
 
-            Players.Add(AddPlayerInput);
-            AddPlayerInput = string.Empty;
+            var player = new Player(AddPlayerInput);
 
-            ShouldExecuteStatisticsButton = true;
+            Players.Add(player);
+            _playerRepository.CreateAsync(player);
+
+            AddPlayerInput = string.Empty;
+            ShouldDisplayPlayerButtons = true;
         }
 
         [RelayCommand]
-        private void RemovePayer(string player)
+        private void RemovePayer(Player player)
         {
             if (!Players.Contains(player))
             {
@@ -45,13 +54,26 @@ namespace ScoreTracker.ViewModels
             }
 
             Players.Remove(player);
-            ShouldExecuteStatisticsButton = Players.Any();
+            _playerRepository.DeleteAsync(player.Id);
+
+            ShouldDisplayPlayerButtons = Players.Any();
         }
 
-        [RelayCommand(CanExecute = nameof(ShouldExecuteStatisticsButton))]
+        [RelayCommand(CanExecute = nameof(ShouldDisplayPlayerButtons))]
         private async Task ShowStatistics()
         {
             await Shell.Current.GoToAsync(nameof(StatisticsPage));
+        }
+
+        [RelayCommand(CanExecute = nameof(ShouldDisplayPlayerButtons))]
+        private async Task AddScore()
+        {
+            var container = new Dictionary<string, object>
+            {
+                ["Players"] = Players.ToList()
+            };
+
+            await Shell.Current.GoToAsync(nameof(ScorePage), container);
         }
     }
 }
