@@ -9,6 +9,7 @@ namespace ScoreTracker
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(StatisticsPage), typeof(StatisticsPage));
+            Routing.RegisterRoute(nameof(ScorePage), typeof(ScorePage));
         }
     }
 }

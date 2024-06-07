@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:entities="clr-namespace:ScoreTracker.Data.Entities"
+             x:Class="ScoreTracker.Pages.ScorePage">
+  <Grid RowDefinitions="*, Auto"
+        ColumnDefinitions=".60*, .40*"
+        Margin="5">
+
+    <CollectionView ItemsSource="{Binding Players}" Grid.ColumnSpan="2">
+      <CollectionView.ItemTemplate>
+        <DataTemplate x:DataType="entities:Player">
+          <Grid ColumnDefinitions=".60*, .40*">
+            <Label Text="{Binding Name}" FontSize="25"/>
+
+            <Entry Keyboard="Numeric" Grid.Column="1" />
+          </Grid>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+    </CollectionView>
+
+    <Button Grid.Row="1"
+            Text="Submit"
+            Margin="5"/>
+
+    <Button Grid.Row="1"
+            Grid.Column="1"
+            BackgroundColor="Red"
+            Text="Clear"
+            Margin="5"/>
+
+  </Grid>
+</ContentPage>

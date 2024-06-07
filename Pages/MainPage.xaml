@@ -3,15 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ScoreTracker.MainPage"
              xmlns:viewmodel="clr-namespace:ScoreTracker.ViewModels"
+             xmlns:entities="clr-namespace:ScoreTracker.Data.Entities"
              x:DataType="viewmodel:MainViewModel">
 
     <Grid RowDefinitions="Auto, Auto, *"
-          ColumnDefinitions=".75*, .25*"
+          ColumnDefinitions=".50*, .50*"
           Padding="10"
           ColumnSpacing="10">
 
+        <Button Text="Add score"
+                Grid.Column="0"
+                Margin="5"
+                Command="{Binding AddScoreCommand}"/>
+
         <Button Text="Show statistics"
-                Grid.ColumnSpan="2"
+                Grid.Column="1"
                 Margin="5"
                 Command="{Binding ShowStatisticsCommand}"/>
 
@@ -28,7 +34,7 @@
                         Grid.ColumnSpan="2"
                         ItemsSource="{Binding Players}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type x:String}">
+                <DataTemplate x:DataType="{x:Type entities:Player}"> 
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems>
@@ -40,7 +46,7 @@
                         </SwipeView.RightItems>
                         <Grid Padding="5">
                             <Frame>
-                                <Label Text="{Binding .}" 
+                                <Label Text="{Binding Name}" 
                                        FontSize="15" />
                             </Frame>
                         </Grid>

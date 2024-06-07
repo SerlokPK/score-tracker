@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using ScoreTracker.Data.Contracts;
+using ScoreTracker.Data.Repositories;
 using ScoreTracker.Pages;
 using ScoreTracker.ViewModels;
 
@@ -25,6 +27,12 @@ namespace ScoreTracker
 
             builder.Services.AddTransient<StatisticsPage>();
             builder.Services.AddTransient<StatisticsViewModel>();
+
+            builder.Services.AddTransient<ScorePage>();
+            builder.Services.AddTransient<ScoreViewModel>();
+
+            builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+            builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
 
             return builder.Build();
         }
