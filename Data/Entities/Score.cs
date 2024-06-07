@@ -13,6 +13,8 @@ namespace ScoreTracker.Data.Entities
 
         public DateTime CreatedAt { get; set; }
 
+        public int Result { get; set; }
+
         [ManyToOne]
         public Player Player { get; set; }
     }

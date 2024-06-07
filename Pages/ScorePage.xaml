@@ -2,33 +2,33 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:entities="clr-namespace:ScoreTracker.Data.Entities"
              x:Class="ScoreTracker.Pages.ScorePage">
-    <ContentPage.Content>
-        <Grid RowDefinitions="Auto, *"
-              ColumnDefinitions=".20*, .20*, .20*, .20*, .20*">
+  <Grid RowDefinitions="*, Auto"
+        ColumnDefinitions=".60*, .40*"
+        Margin="5">
 
-            <Label Text="13.06.2005"
-                   Grid.Column="1"/>
+    <CollectionView ItemsSource="{Binding Players}" Grid.ColumnSpan="2">
+      <CollectionView.ItemTemplate>
+        <DataTemplate x:DataType="entities:Player">
+          <Grid ColumnDefinitions=".60*, .40*">
+            <Label Text="{Binding Name}" FontSize="25"/>
 
-            <Label Text="13.06.2005"
-                   Grid.Column="2"/>
+            <Entry Keyboard="Numeric" Grid.Column="1" />
+          </Grid>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+    </CollectionView>
 
-            <Label Text="13.06.2005"
-                   Grid.Column="3"/>
+    <Button Grid.Row="1"
+            Text="Submit"
+            Margin="5"/>
 
-            <Label Text="13.06.2005"
-                   Grid.Column="4"/>
+    <Button Grid.Row="1"
+            Grid.Column="1"
+            BackgroundColor="Red"
+            Text="Clear"
+            Margin="5"/>
 
-            <Label Text="Marko"
-                   Grid.Row="1"/>
-
-            <Label Text="Ana"
-                   Grid.Row="2"/>
-
-            <Label Text="Pera"
-                   Grid.Row="3"/>
-
-            <!--<Entry Keyboard="Numeric" />-->
-        </Grid>
-    </ContentPage.Content>
+  </Grid>
 </ContentPage>
