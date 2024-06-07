@@ -17,6 +17,7 @@ namespace ScoreTracker.Data
             Database = new SQLiteAsyncConnection(DatabasePath, Flags);
 
             await Database.CreateTableAsync<Player>();
+            await Database.CreateTableAsync<Score>();
         }
 
         private const string DatabaseFilename = "score-tracker.db3";

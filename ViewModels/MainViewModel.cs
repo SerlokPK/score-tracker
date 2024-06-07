@@ -20,6 +20,7 @@ namespace ScoreTracker.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(ShowStatisticsCommand))]
+        [NotifyCanExecuteChangedFor(nameof(AddScoreCommand))]
         private bool _shouldDisplayPlayerButtons;
 
         [ObservableProperty]
@@ -70,7 +71,7 @@ namespace ScoreTracker.ViewModels
         {
             var container = new Dictionary<string, object>
             {
-                ["Players"] = Players.ToList()
+                ["Players"] = Players
             };
 
             await Shell.Current.GoToAsync(nameof(ScorePage), container);

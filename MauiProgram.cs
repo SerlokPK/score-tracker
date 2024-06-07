@@ -32,6 +32,7 @@ namespace ScoreTracker
             builder.Services.AddTransient<ScoreViewModel>();
 
             builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+            builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
 
             return builder.Build();
         }

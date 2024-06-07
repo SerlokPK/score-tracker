@@ -15,6 +15,7 @@ namespace ScoreTracker.Data.Repositories
         {
             await SetupContextAsync();
             await Database.DeleteAsync<Player>(id);
+            // TODO proveri da li kaskadno brise scores
         }
 
         public async Task<IEnumerable<Player>> GetAllAsync()

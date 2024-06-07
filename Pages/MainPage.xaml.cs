@@ -28,6 +28,8 @@ namespace ScoreTracker
             {
                 _mainViewModel.Players.Add(player);
             }
+
+            _mainViewModel.ShouldDisplayPlayerButtons = _mainViewModel.Players.Any();
         }
     }
 

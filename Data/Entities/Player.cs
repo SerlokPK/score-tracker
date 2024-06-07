@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace ScoreTracker.Data.Entities
 {
@@ -11,6 +12,9 @@ namespace ScoreTracker.Data.Entities
         public string Name { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        [OneToMany(CascadeOperations = CascadeOperation.CascadeDelete)]
+        public List<Score> Scores { get; set; }
 
         public Player()
         {

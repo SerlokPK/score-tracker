@@ -4,6 +4,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ScoreTracker.Pages.ScorePage">
     <ContentPage.Content>
-        
+        <Grid RowDefinitions="Auto, *"
+              ColumnDefinitions=".20*, .20*, .20*, .20*, .20*">
+
+            <Label Text="13.06.2005"
+                   Grid.Column="1"/>
+
+            <Label Text="13.06.2005"
+                   Grid.Column="2"/>
+
+            <Label Text="13.06.2005"
+                   Grid.Column="3"/>
+
+            <Label Text="13.06.2005"
+                   Grid.Column="4"/>
+
+            <Label Text="Marko"
+                   Grid.Row="1"/>
+
+            <Label Text="Ana"
+                   Grid.Row="2"/>
+
+            <Label Text="Pera"
+                   Grid.Row="3"/>
+
+            <!--<Entry Keyboard="Numeric" />-->
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
