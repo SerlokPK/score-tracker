@@ -1,4 +1,5 @@
-﻿using ScoreTracker.Data.Entities;
+﻿using System.Linq.Expressions;
+using ScoreTracker.Data.Entities;
 
 namespace ScoreTracker.Data.Contracts
 {
@@ -6,6 +7,6 @@ namespace ScoreTracker.Data.Contracts
     {
         Task CreateBulkAsync(IEnumerable<Score> scores);
 
-        Task<IEnumerable<Score>> GetAllAsync();
+        Task<IEnumerable<Score>> GetAsync(Expression<Func<Score, bool>> expression);
     }
 }

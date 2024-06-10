@@ -70,7 +70,12 @@ namespace ScoreTracker.ViewModels
         [RelayCommand(CanExecute = nameof(ShouldDisplayPlayerButtons))]
         private async Task ShowStatistics()
         {
-            await Shell.Current.GoToAsync(nameof(StatisticsPage));
+            var container = new Dictionary<string, object>
+            {
+                ["Players"] = Players
+            };
+
+            await Shell.Current.GoToAsync(nameof(StatisticsPage), container);
         }
 
         [RelayCommand(CanExecute = nameof(ShouldDisplayPlayerButtons))]
