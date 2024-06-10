@@ -2,33 +2,35 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:entities="clr-namespace:ScoreTracker.Data.Entities"
+             xmlns:dtos="clr-namespace:ScoreTracker.DTOs"
              x:Class="ScoreTracker.Pages.ScorePage">
-  <Grid RowDefinitions="*, Auto"
+    <Grid RowDefinitions="*, Auto"
         ColumnDefinitions=".60*, .40*"
         Margin="5">
 
-    <CollectionView ItemsSource="{Binding Players}" Grid.ColumnSpan="2">
-      <CollectionView.ItemTemplate>
-        <DataTemplate x:DataType="entities:Player">
-          <Grid ColumnDefinitions=".60*, .40*">
-            <Label Text="{Binding Name}" FontSize="25"/>
+        <CollectionView ItemsSource="{Binding Scores}" Grid.ColumnSpan="2">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="dtos:ScoreDto">
+                    <Grid ColumnDefinitions=".60*, .40*">
+                        <Label Text="{Binding PlayerName}" FontSize="25"/>
 
-            <Entry Keyboard="Numeric" Grid.Column="1" />
-          </Grid>
-        </DataTemplate>
-      </CollectionView.ItemTemplate>
-    </CollectionView>
+                        <Entry Keyboard="Numeric" Text="{Binding Result, Mode=TwoWay}" Grid.Column="1" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-    <Button Grid.Row="1"
+        <Button Grid.Row="1"
             Text="Submit"
-            Margin="5"/>
+            Margin="5"
+            Command="{Binding SubmitCommand}"/>
 
-    <Button Grid.Row="1"
+        <Button Grid.Row="1"
             Grid.Column="1"
             BackgroundColor="Red"
             Text="Clear"
-            Margin="5"/>
+            Margin="5"
+            Command="{Binding ClearCommand}"/>
 
-  </Grid>
+    </Grid>
 </ContentPage>

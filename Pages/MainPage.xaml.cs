@@ -1,4 +1,5 @@
 ﻿using ScoreTracker.Data.Contracts;
+using ScoreTracker.DTOs;
 using ScoreTracker.ViewModels;
 
 namespace ScoreTracker
@@ -26,7 +27,13 @@ namespace ScoreTracker
             var players = await _playerRepository.GetAllAsync();
             foreach (var player in players)
             {
-                _mainViewModel.Players.Add(player);
+                var playerDto = new PlayerDto
+                {
+                    Id = player.Id,
+                    Name = player.Name,
+                    CreatedAt = player.CreatedAt,
+                };
+                _mainViewModel.Players.Add(playerDto);
             }
 
             _mainViewModel.ShouldDisplayPlayerButtons = _mainViewModel.Players.Any();

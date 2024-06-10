@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ScoreTracker.MainPage"
              xmlns:viewmodel="clr-namespace:ScoreTracker.ViewModels"
-             xmlns:entities="clr-namespace:ScoreTracker.Data.Entities"
+             xmlns:dtos="clr-namespace:ScoreTracker.DTOs"
              x:DataType="viewmodel:MainViewModel">
 
     <Grid RowDefinitions="Auto, Auto, *"
@@ -34,7 +34,7 @@
                         Grid.ColumnSpan="2"
                         ItemsSource="{Binding Players}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type entities:Player}"> 
+                <DataTemplate x:DataType="{x:Type dtos:PlayerDto}"> 
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems>
