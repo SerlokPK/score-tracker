@@ -5,10 +5,10 @@ namespace ScoreTracker.Data.Repositories
 {
     public class ScoreRepository : Context, IScoreRepository
     {
-        public async Task CreateAsync(Score score)
+        public async Task CreateBulkAsync(IEnumerable<Score> scores)
         {
             await SetupContextAsync();
-            await Database.InsertAsync(score);
+            await Database.InsertAllAsync(scores);
         }
 
         public async Task<IEnumerable<Score>> GetAllAsync()

@@ -4,7 +4,7 @@ namespace ScoreTracker.Data.Contracts
 {
     public interface IScoreRepository
     {
-        Task CreateAsync(Score score);
+        Task CreateBulkAsync(IEnumerable<Score> scores);
 
         Task<IEnumerable<Score>> GetAllAsync();
     }
