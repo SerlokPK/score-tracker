@@ -36,17 +36,22 @@ namespace ScoreTracker.ViewModels
         [RelayCommand]
         private void Submit()
         {
-            //foreach (var score in Scores)
-            //{
-            //    score.CreatedAt = DateTime.UtcNow;
-            //}
+            var scores = Scores
+                .Where(s => s.Result.HasValue)
+                .Select(s => new Score
+                {
+                    Id = s.Id,
+                    PlayerId = s.PlayerId,
+                    CreatedAt = DateTime.UtcNow,
+                    Result = s.Result.Value
+                });
+            
+            _scoreRepository.CreateBulkAsync(scores);
 
-            //_scoreRepository.CreateBulkAsync(Scores);
-
-            //foreach (var score in Scores)
-            //{
-            //    score.Result = null;
-            //}
+            foreach (var score in Scores)
+            {
+                score.Result = null;
+            }
         }
     }
 }
