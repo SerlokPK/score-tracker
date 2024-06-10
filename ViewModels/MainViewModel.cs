@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using ScoreTracker.Data.Contracts;
 using ScoreTracker.Data.Entities;
+using ScoreTracker.DTOs;
 using ScoreTracker.Pages;
 
 namespace ScoreTracker.ViewModels
@@ -24,7 +25,7 @@ namespace ScoreTracker.ViewModels
         private bool _shouldDisplayPlayerButtons;
 
         [ObservableProperty]
-        private ObservableCollection<Player> _players;
+        private ObservableCollection<PlayerDto> _players;
 
         [ObservableProperty]
         private string _addPlayerInput;
@@ -38,8 +39,14 @@ namespace ScoreTracker.ViewModels
             }
 
             var player = new Player(AddPlayerInput);
+            var playerDto = new PlayerDto
+            {
+                Id = player.Id,
+                CreatedAt = player.CreatedAt,
+                Name = player.Name
+            };
 
-            Players.Add(player);
+            Players.Add(playerDto);
             _playerRepository.CreateAsync(player);
 
             AddPlayerInput = string.Empty;
@@ -47,7 +54,7 @@ namespace ScoreTracker.ViewModels
         }
 
         [RelayCommand]
-        private void RemovePayer(Player player)
+        private void RemovePayer(PlayerDto player)
         {
             if (!Players.Contains(player))
             {

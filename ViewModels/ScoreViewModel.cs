@@ -19,7 +19,7 @@ namespace ScoreTracker.ViewModels
         }
 
         [ObservableProperty]
-        private ObservableCollection<Player> _players;
+        private ObservableCollection<PlayerDto> _players;
 
         [ObservableProperty]
         private ObservableCollection<ScoreDto> _scores;
