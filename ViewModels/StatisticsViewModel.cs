@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ScoreTracker.Data.Contracts;
 using ScoreTracker.Data.Entities;
 using ScoreTracker.DTOs;
@@ -23,7 +24,7 @@ namespace ScoreTracker.ViewModels
 
             SelectedDate = DateTime.Now;
             Items = [Day, Month, Year];
-            SelectedItem = Items.First();
+            //SelectedItem = Items.First();
         }
 
         [ObservableProperty]

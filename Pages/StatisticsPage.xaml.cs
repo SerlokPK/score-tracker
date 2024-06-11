@@ -21,4 +21,14 @@ public partial class StatisticsPage : ContentPage
 
         await _statisticsViewModel.LoadStatisticsAsync();
     }
+
+    private async void DatePicker_OnDateSelected(object? sender, DateChangedEventArgs e)
+    {
+        await _statisticsViewModel.LoadStatisticsAsync();
+    }
+
+    private async void Picker_OnSelectedIndexChanged(object? sender, EventArgs e)
+    {
+        await _statisticsViewModel?.LoadStatisticsAsync();
+    }
 }
