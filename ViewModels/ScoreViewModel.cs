@@ -27,6 +27,11 @@ namespace ScoreTracker.ViewModels
         [RelayCommand]
         private void Clear()
         {
+            if (!Scores.Any(x => x.Result.HasValue))
+            {
+                return;
+            }
+
             foreach (var score in Scores)
             {
                 score.Result = null;
@@ -36,6 +41,11 @@ namespace ScoreTracker.ViewModels
         [RelayCommand]
         private async Task Submit()
         {
+            if (!Scores.Any(x => x.Result.HasValue))
+            {
+                return;
+            }
+
             var scores = Scores
                 .Where(s => s.Result.HasValue)
                 .Select(s => new Score

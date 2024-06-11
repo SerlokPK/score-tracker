@@ -14,9 +14,22 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="dtos:ScoreDto">
                     <Grid ColumnDefinitions=".60*, .40*">
-                        <Label Text="{Binding PlayerName}" FontSize="25"/>
+                        <Frame BorderColor="Black" 
+                               CornerRadius="5" 
+                               Padding="10" 
+                               Margin="5">
 
-                        <Entry Keyboard="Numeric" Text="{Binding Result, Mode=TwoWay}" Grid.Column="1" />
+                            <Label Text="{Binding PlayerName}" FontSize="20"/>
+                        </Frame>
+
+                        <Frame BorderColor="Black" 
+                               CornerRadius="5" 
+                               Padding="10" 
+                               Margin="5"
+                               Grid.Column="1">
+
+                            <Entry Keyboard="Numeric" Text="{Binding Result, Mode=TwoWay}" FontSize="20" />
+                        </Frame>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
