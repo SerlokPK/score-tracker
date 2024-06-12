@@ -13,7 +13,8 @@
             <DatePicker Date="{Binding SelectedDate}"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
-                        DateSelected="DatePicker_OnDateSelected"/>
+                        DateSelected="DatePicker_OnDateSelected" 
+                        FontSize="20"/>
 
             <Picker Title="Select scope"
                     ItemsSource="{Binding Items}"
@@ -21,7 +22,8 @@
                     HorizontalOptions="Center"
                     VerticalOptions="CenterAndExpand"
                     Grid.Column="1"
-                    SelectedIndexChanged="Picker_OnSelectedIndexChanged"/>
+                    SelectedIndexChanged="Picker_OnSelectedIndexChanged"
+                    FontSize="20"/>
 
             <CollectionView ItemsSource="{Binding Players}" 
                             Margin="10"
