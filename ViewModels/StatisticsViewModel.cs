@@ -24,7 +24,6 @@ namespace ScoreTracker.ViewModels
 
             SelectedDate = DateTime.Now;
             Items = [Day, Month, Year];
-            //SelectedItem = Items.First();
         }
 
         [ObservableProperty]
