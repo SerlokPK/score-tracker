@@ -23,7 +23,8 @@
 
         <Entry Placeholder="Enter player name"
                Text="{Binding AddPlayerInput}"
-               Grid.Row="1"/>
+               Grid.Row="1"
+               FontSize="20"/>
 
         <Button Text="Add"
                 Grid.Row="1"
@@ -47,7 +48,7 @@
                         <Grid Padding="5">
                             <Frame>
                                 <Label Text="{Binding Name}" 
-                                       FontSize="15" />
+                                       FontSize="20" />
                             </Frame>
                         </Grid>
                     </SwipeView>

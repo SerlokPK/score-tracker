@@ -14,8 +14,12 @@ namespace ScoreTracker.Data.Repositories
         public async Task DeleteAsync(Guid id)
         {
             await SetupContextAsync();
+
+            await Database
+                .Table<Score>()
+                .Where(x => x.PlayerId == id)
+                .DeleteAsync();
             await Database.DeleteAsync<Player>(id);
-            // TODO proveri da li kaskadno brise scores
         }
 
         public async Task<IEnumerable<Player>> GetAllAsync()

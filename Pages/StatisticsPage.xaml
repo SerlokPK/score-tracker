@@ -2,8 +2,57 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ScoreTracker.Pages.StatisticsPage">
+             xmlns:dtos="clr-namespace:ScoreTracker.DTOs"
+             xmlns:viewmodel="clr-namespace:ScoreTracker.ViewModels"
+             x:Class="ScoreTracker.Pages.StatisticsPage"
+             x:DataType="viewmodel:StatisticsViewModel">
     <ContentPage.Content>
-        
+        <Grid RowDefinitions="Auto, *"
+              ColumnDefinitions=".50*, .50*">
+
+            <DatePicker Date="{Binding SelectedDate}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        DateSelected="DatePicker_OnDateSelected" 
+                        FontSize="20"/>
+
+            <Picker Title="Select scope"
+                    ItemsSource="{Binding Items}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="CenterAndExpand"
+                    Grid.Column="1"
+                    SelectedIndexChanged="Picker_OnSelectedIndexChanged"
+                    FontSize="20"/>
+
+            <CollectionView ItemsSource="{Binding Players}" 
+                            Margin="10"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="dtos:PlayerDto">
+                        <Grid ColumnDefinitions=".50*, .50*">
+                            <Frame BorderColor="Black" 
+                                   CornerRadius="5" 
+                                   Padding="10" 
+                                   Margin="5">
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding Name}" FontSize="20" />
+                                </VerticalStackLayout>
+                            </Frame>
+                            <Frame BorderColor="Black" 
+                                   CornerRadius="5" 
+                                   Padding="10" 
+                                   Margin="5"
+                                   Grid.Column="1">
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding Score, Mode=TwoWay}" FontSize="20" />
+                                </VerticalStackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

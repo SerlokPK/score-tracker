@@ -24,8 +24,7 @@ public partial class ScorePage : ContentPage
             _scoreViewModel.Scores.Add(new ScoreDto
             {
                 PlayerName = player.Name,
-                PlayerId = player.Id,
-                Id = Guid.NewGuid()
+                PlayerId = player.Id
             });
         }
     }

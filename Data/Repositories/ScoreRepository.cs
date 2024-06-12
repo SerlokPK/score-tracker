@@ -1,4 +1,5 @@
-﻿using ScoreTracker.Data.Contracts;
+﻿using System.Linq.Expressions;
+using ScoreTracker.Data.Contracts;
 using ScoreTracker.Data.Entities;
 
 namespace ScoreTracker.Data.Repositories
@@ -11,10 +12,10 @@ namespace ScoreTracker.Data.Repositories
             await Database.InsertAllAsync(scores);
         }
 
-        public async Task<IEnumerable<Score>> GetAllAsync()
+        public async Task<IEnumerable<Score>> GetAsync(Expression<Func<Score, bool>> expression)
         {
             await SetupContextAsync();
-            return await Database.Table<Score>().ToListAsync();
+            return await Database.Table<Score>().Where(expression).ToListAsync();
         }
     }
 }

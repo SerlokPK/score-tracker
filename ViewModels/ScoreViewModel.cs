@@ -27,6 +27,11 @@ namespace ScoreTracker.ViewModels
         [RelayCommand]
         private void Clear()
         {
+            if (!Scores.Any(x => x.Result.HasValue))
+            {
+                return;
+            }
+
             foreach (var score in Scores)
             {
                 score.Result = null;
@@ -34,19 +39,24 @@ namespace ScoreTracker.ViewModels
         }
 
         [RelayCommand]
-        private void Submit()
+        private async Task Submit()
         {
+            if (!Scores.Any(x => x.Result.HasValue))
+            {
+                return;
+            }
+
             var scores = Scores
                 .Where(s => s.Result.HasValue)
                 .Select(s => new Score
                 {
-                    Id = s.Id,
+                    Id = Guid.NewGuid(),
                     PlayerId = s.PlayerId,
                     CreatedAt = DateTime.UtcNow,
                     Result = s.Result.Value
                 });
             
-            _scoreRepository.CreateBulkAsync(scores);
+            await _scoreRepository.CreateBulkAsync(scores);
 
             foreach (var score in Scores)
             {
