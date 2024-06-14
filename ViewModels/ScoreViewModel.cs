@@ -46,13 +46,14 @@ namespace ScoreTracker.ViewModels
                 return;
             }
 
+            var date = DateTime.UtcNow;
             var scores = Scores
                 .Where(s => s.Result.HasValue)
                 .Select(s => new Score
                 {
                     Id = Guid.NewGuid(),
                     PlayerId = s.PlayerId,
-                    CreatedAt = DateTime.UtcNow,
+                    CreatedAt = date,
                     Result = s.Result.Value
                 });
             
