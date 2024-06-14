@@ -14,7 +14,7 @@ namespace ScoreTracker.ViewModels
 
         public ScoreViewModel(IScoreRepository scoreRepository)
         {
-            _scoreRepository = scoreRepository;
+            _scoreRepository = scoreRepository ?? throw new ArgumentNullException(nameof(scoreRepository));
             Scores = [];
         }
 

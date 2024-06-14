@@ -5,6 +5,7 @@ using ScoreTracker.DTOs;
 using ScoreTracker.Extensions;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
+using Microsoft.Extensions.Configuration;
 
 namespace ScoreTracker.ViewModels
 {
@@ -12,14 +13,16 @@ namespace ScoreTracker.ViewModels
     public partial class StatisticsViewModel : ObservableObject
     {
         private readonly IScoreRepository _scoreRepository;
+        private readonly IConfiguration _configuration;
 
         private const string Day = nameof(Day);
         private const string Month = nameof(Month);
         private const string Year = nameof(Year);
 
-        public StatisticsViewModel(IScoreRepository scoreRepository)
+        public StatisticsViewModel(IScoreRepository scoreRepository, IConfiguration configuration)
         {
-            _scoreRepository = scoreRepository;
+            _scoreRepository = scoreRepository ?? throw new ArgumentNullException(nameof(scoreRepository));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
             ScoreSum = [];
             ScoreBoard = [];
@@ -92,11 +95,11 @@ namespace ScoreTracker.ViewModels
                 .Select(group => new ScoreBoardDto
                 {
                     CreatedAt = group.Key,
-                    Players = group.OrderBy(x => x.Result).Select(x => new PlayerDto
+                    Players = group.Select(x => new PlayerDto
                     {
                         Name = Players.First(p => p.Id == x.PlayerId).Name,
                         Score = group.First(g => g.PlayerId == x.PlayerId).Result
-                    }).ToList()
+                    })
                 })
                 .OrderByDescending(x => x.CreatedAt)
                 .ToList();
@@ -104,11 +107,8 @@ namespace ScoreTracker.ViewModels
             ScoreBoard = [];
             foreach (var scoreBoard in groupByDate)
             {
-                // TODO citja iz appsettings
-                //scoreBoard.Players = scoreBoard.Players
-                //    .OrderBy(x => x.Score)
-                //    .ToList();
-
+                OrderPlayers(scoreBoard);
+                
                 var previousScore = 0;
                 var tablePlace = 0;
                 foreach (var player in scoreBoard.Players)
@@ -121,11 +121,6 @@ namespace ScoreTracker.ViewModels
 
                 ScoreBoard.Add(scoreBoard);
             }
-
-            //groupByDate.SelectMany(x => x.Players).Select(p =>
-            //{
-
-            //});
         }
 
         private void SetScoreSum(IEnumerable<Score> scores)
@@ -144,6 +139,27 @@ namespace ScoreTracker.ViewModels
             {
                 ScoreSum.Add(player);
             }
+        }
+
+        private void OrderPlayers(ScoreBoardDto scoreBoard)
+        {
+            if (!bool.TryParse(_configuration["General:ReadAscending"], out var isAscending))
+            {
+                return;
+            }
+
+            if (isAscending)
+            {
+                scoreBoard.Players = scoreBoard.Players
+                    .OrderBy(x => x.Score)
+                    .ToList();
+
+                return;
+            }
+
+            scoreBoard.Players = scoreBoard.Players
+                .OrderByDescending(x => x.Score)
+                .ToList();
         }
     }
 }
