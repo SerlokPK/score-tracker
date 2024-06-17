@@ -5,6 +5,7 @@ using ScoreTracker.DTOs;
 using ScoreTracker.Extensions;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Configuration;
 
 namespace ScoreTracker.ViewModels
@@ -28,7 +29,8 @@ namespace ScoreTracker.ViewModels
             ScoreBoard = [];
             SelectedDate = DateTime.Now;
             Items = [Day, Month, Year];
-            IsScoreBoardVisible = true;
+            //IsScoreBoardVisible = true;
+            IsScorePositionVisible = true;
         }
 
         [ObservableProperty]
@@ -50,10 +52,23 @@ namespace ScoreTracker.ViewModels
         private ObservableCollection<ScoreBoardDto> _scoreBoard;
 
         [ObservableProperty]
+        private ObservableCollection<PlayerScoreDto> _scorePositions;
+
+        [ObservableProperty]
         private bool _isScoreBoardVisible;
 
         [ObservableProperty]
         private bool _isScoreSumVisible;
+
+        [ObservableProperty]
+        private bool _isScorePositionVisible;
+
+        [RelayCommand]
+        private void ChangeView()
+        {
+            IsScoreBoardVisible = !IsScoreBoardVisible;
+            IsScoreSumVisible = !IsScoreSumVisible;
+        }
 
         public async Task LoadStatisticsAsync()
         {
@@ -86,6 +101,22 @@ namespace ScoreTracker.ViewModels
 
             SetScoreSum(scores);
             SetScoreBoard(scores);
+            SetScorePosition();
+        }
+
+        private void SetScorePosition()
+        {
+            ScorePositions = [];
+            foreach (var player in Players)
+            {
+                ScorePositions.Add(new PlayerScoreDto
+                {
+                    Name = player.Name,
+                    FirstPlace = ScoreBoard.Count(x => x.Players.Any(p => p.Name == player.Name && p.Score == 1)),
+                    SecondPlace = ScoreBoard.Count(x => x.Players.Any(p => p.Name == player.Name && p.Score == 2)),
+                    ThirdPlace = ScoreBoard.Count(x => x.Players.Any(p => p.Name == player.Name && p.Score == 3))
+                });
+            }
         }
 
         private void SetScoreBoard(IEnumerable<Score> scores)
@@ -108,7 +139,7 @@ namespace ScoreTracker.ViewModels
             foreach (var scoreBoard in groupByDate)
             {
                 OrderPlayers(scoreBoard);
-                
+
                 var previousScore = 0;
                 var tablePlace = 0;
                 foreach (var player in scoreBoard.Players)
