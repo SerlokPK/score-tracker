@@ -29,7 +29,6 @@ namespace ScoreTracker.ViewModels
             ScoreBoard = [];
             SelectedDate = DateTime.Now;
             Items = [Day, Month, Year];
-            //IsScoreBoardVisible = true;
             IsScorePositionVisible = true;
         }
 
@@ -66,8 +65,30 @@ namespace ScoreTracker.ViewModels
         [RelayCommand]
         private void ChangeView()
         {
-            IsScoreBoardVisible = !IsScoreBoardVisible;
-            IsScoreSumVisible = !IsScoreSumVisible;
+            if (IsScorePositionVisible)
+            {
+                IsScorePositionVisible = false;
+                IsScoreSumVisible = false;
+                IsScoreBoardVisible = true;
+
+                return;
+            }
+
+            if (IsScoreSumVisible)
+            {
+                IsScorePositionVisible = true;
+                IsScoreSumVisible = false;
+                IsScoreBoardVisible = false;
+
+                return;
+            }
+
+            if (IsScoreBoardVisible)
+            {
+                IsScorePositionVisible = false;
+                IsScoreSumVisible = true;
+                IsScoreBoardVisible = false;
+            }
         }
 
         public async Task LoadStatisticsAsync()
