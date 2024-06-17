@@ -130,12 +130,20 @@ namespace ScoreTracker.ViewModels
             ScorePositions = [];
             foreach (var player in Players)
             {
+                var positions = new List<PositionDto>(Players.Count);
+                for (var i = 1; i <= Players.Count; ++i)
+                {
+                    var position = ScoreBoard.Count(x => x.Players.Any(p => p.Name == player.Name && p.Score == i));
+                    positions.Add(new PositionDto
+                    {
+                        Value = position,
+                        Text = $"{i}. place: "
+                    });
+                }
                 ScorePositions.Add(new PlayerScoreDto
                 {
                     Name = player.Name,
-                    FirstPlace = ScoreBoard.Count(x => x.Players.Any(p => p.Name == player.Name && p.Score == 1)),
-                    SecondPlace = ScoreBoard.Count(x => x.Players.Any(p => p.Name == player.Name && p.Score == 2)),
-                    ThirdPlace = ScoreBoard.Count(x => x.Players.Any(p => p.Name == player.Name && p.Score == 3))
+                    Positions = new ObservableCollection<PositionDto>(positions)
                 });
             }
         }

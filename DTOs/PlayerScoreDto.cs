@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ScoreTracker.DTOs
 {
@@ -7,12 +8,6 @@ namespace ScoreTracker.DTOs
         public string Name { get; set; }
 
         [ObservableProperty] 
-        private int _firstPlace;
-
-        [ObservableProperty]
-        private int _secondPlace;
-
-        [ObservableProperty]
-        private int _thirdPlace;
+        private ObservableCollection<PositionDto> _positions;
     }
 }
